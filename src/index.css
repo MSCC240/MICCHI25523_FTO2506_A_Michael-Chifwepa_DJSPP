@@ -1,0 +1,29 @@
+:root {
+  --grey-text: #555;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  background: #f9f9f9;
+}
+
+:root {
+  --card-bg: #fff;
+  --border: #ddd;
+  --text: #111;
+}
+
+body[data-theme="dark"] {
+  --card-bg: #21252d;
+  --border: #3a3d45;
+  --text: #e7e7e7;
+  background: #15171c;
+}
+
+body {
+  color: var(--text);
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
+

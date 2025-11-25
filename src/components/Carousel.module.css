@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 14px;
+  padding: 10px 0;
+}
+
+.arrow {
+  border: none;
+  background: var(--card-bg);
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
