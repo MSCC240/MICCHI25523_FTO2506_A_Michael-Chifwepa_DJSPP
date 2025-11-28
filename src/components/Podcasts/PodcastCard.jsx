@@ -22,7 +22,7 @@ export default function PodcastCard({ podcast }) {
   const navigate = useNavigate();
 
   const handleNavigate = (preview) => {
-    navigate(`/show/${preview.id}`, { state: { genres: preview.genres } });
+    navigate(`/podcast/${preview.id}`, { state: { genres: preview.genres } });
   };
 
   return (

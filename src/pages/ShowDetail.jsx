@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { fetchSinglePodcast } from "../api/fetchPata";
+import { fetchSinglePodcast } from "../api/fetchData";
 import { Loading, Error, PodcastDetail } from "../components";
 
 /**

@@ -1,23 +1,21 @@
-import { useContext } from "react";
-import { ThemeContext } from "../../app/ThemeContext";
-import { FaSun, FaMoon } from "react-icons/fa";
+import { useTheme } from "../../app/ThemeContext";
 
 export default function ThemeToggle() {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useTheme();
 
   return (
-    <button 
+    <button
       onClick={toggleTheme}
       style={{
-        background: "none",
-        border: "none",
+        padding: "8px 14px",
+        borderRadius: "8px",
+        border: "1px solid var(--border)",
+        background: "var(--card-bg)",
+        color: "var(--text)",
         cursor: "pointer",
-        fontSize: "1.5rem",
-        padding: "6px"
       }}
-      aria-label="Toggle Theme"
     >
-      {theme === "light" ? <FaMoon /> : <FaSun />}
+      {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
     </button>
   );
 }

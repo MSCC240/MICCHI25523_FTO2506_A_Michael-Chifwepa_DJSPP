@@ -6,7 +6,8 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
-    document.body.setAttribute("data-theme", theme);
+    // Apply theme to <html>, not <body>
+    document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
   const toggleTheme = () =>

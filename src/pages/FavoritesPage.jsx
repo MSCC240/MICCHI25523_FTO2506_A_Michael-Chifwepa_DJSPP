@@ -1,98 +1,151 @@
+
+
 import { useFavs } from "../app/FavsContext";
-import { usePlayer } from "../app/PlayerContext";
-import { useState } from "react";
-import FavEpisodeCard from "../components/Favs/FavEpisodeCard";
+import { useAudio } from "../app/AudioContext";
+
+import { useContext } from "react";
+import { PodcastContext } from "../context/PodcastContext";
+
+import SortSelect from "../components/Filters/SortSelect";
+
+import styles from "./FavoritesPage.module.css";
+
+import { FaPlay, FaTrash } from "react-icons/fa";
 
 export default function FavoritesPage() {
-  const { favs, removeFav } = useFavs();
-  const { playTrack } = usePlayer();
+  // Global sorting (from PodcastContext)
+  const { sortKey } = useContext(PodcastContext);
 
-  const [sortBy, setSortBy] = useState("newest");
-  const [filterShow, setFilterShow] = useState("all");
+  // Favorites system
+  const { favs, toggleFav } = useFavs();
 
-  // Group episodes by show title
-  const groupedByShow = favs.reduce((acc, ep) => {
-    if (!acc[ep.showTitle]) acc[ep.showTitle] = [];
-    acc[ep.showTitle].push(ep);
-    return acc;
-  }, {});
+  // Audio player
+  const { playTrack } = useAudio();
 
-  // Sorting logic
-  function sortEpisodes(episodes) {
-    if (sortBy === "newest") {
-      return [...episodes].sort(
-        (a, b) => new Date(b.addedAt) - new Date(a.addedAt)
-      );
+  // Handle empty favorites
+  if (!favs || favs.length === 0)
+    return <p className={styles.empty}>No favorites yet.</p>;
+
+  // Helper to get numeric timestamp from addedAt (supports number or ISO)
+  const getTime = (v) => {
+    if (v == null) return 0;
+    const n = Number(v);
+    if (!Number.isNaN(n)) return n;
+    const t = Date.parse(String(v));
+    return Number.isNaN(t) ? 0 : t;
+  };
+
+  // Map canonical sortKey values (support both naming styles)
+  // canonical keys we handle:
+  // - newest / date-desc  -> newest first
+  // - oldest / date-asc   -> oldest first
+  // - az / title-asc      -> title A → Z
+  // - za / title-desc     -> title Z → A
+  const canonicalKey = (() => {
+    if (!sortKey) return "newest";
+    const k = String(sortKey).toLowerCase();
+    if (k === "date-desc" || k === "newest") return "newest";
+    if (k === "date-asc" || k === "oldest") return "oldest";
+    if (k === "title-asc" || k === "az") return "az";
+    if (k === "title-desc" || k === "za") return "za";
+    // fallback — try to guess common patterns
+    if (k.includes("date") && k.includes("desc")) return "newest";
+    if (k.includes("date") && k.includes("asc")) return "oldest";
+    if (k.includes("title") && k.includes("asc")) return "az";
+    if (k.includes("title") && k.includes("desc")) return "za";
+    return "newest";
+  })();
+
+  const sorted = (() => {
+    // copy to avoid mutating state
+    const arr = [...favs];
+
+    switch (canonicalKey) {
+      case "newest":
+        return arr.sort((a, b) => getTime(b.addedAt) - getTime(a.addedAt));
+      case "oldest":
+        return arr.sort((a, b) => getTime(a.addedAt) - getTime(b.addedAt));
+      case "az":
+        return arr.sort((a, b) => {
+          const A = (a.title || "").toLowerCase();
+          const B = (b.title || "").toLowerCase();
+          return A.localeCompare(B);
+        });
+      case "za":
+        return arr.sort((a, b) => {
+          const A = (a.title || "").toLowerCase();
+          const B = (b.title || "").toLowerCase();
+          return B.localeCompare(A);
+        });
+      default:
+        return arr;
     }
-
-    if (sortBy === "oldest") {
-      return [...episodes].sort(
-        (a, b) => new Date(a.addedAt) - new Date(b.addedAt)
-      );
-    }
-
-    if (sortBy === "az") {
-      return [...episodes].sort((a, b) =>
-        a.title.localeCompare(b.title)
-      );
-    }
-
-    if (sortBy === "za") {
-      return [...episodes].sort((a, b) =>
-        b.title.localeCompare(a.title)
-      );
-    }
-
-    return episodes;
-  }
+  })();
 
   return (
-    <div className="favs-page">
-
+    <div className={styles.container}>
       <h1>Favourite Episodes</h1>
-      <p>Your saved episodes from all shows</p>
+      <p className={styles.subtitle}>Your saved episodes from all shows</p>
 
-      {/* Controls */}
-      <div className="favs-controls">
-        <label>Sort by:</label>
-        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-          <option value="newest">Newest Added</option>
-          <option value="oldest">Oldest Added</option>
-          <option value="az">A–Z Title</option>
-          <option value="za">Z–A Title</option>
-        </select>
-
-        <label>Show:</label>
-        <select value={filterShow} onChange={(e) => setFilterShow(e.target.value)}>
-          <option value="all">All Shows</option>
-          {Object.keys(groupedByShow).map(show => (
-            <option key={show} value={show}>{show}</option>
-          ))}
-        </select>
+      {/* Sorting Controls ONLY */}
+      <div className={styles.controls}>
+        <div className={styles.controlGroup}>
+          <label>Sort by:</label>
+          <SortSelect />
+        </div>
       </div>
 
-      {/* Render grouped episodes */}
-      {Object.entries(groupedByShow).map(([showTitle, episodes]) => {
-        // Apply show filter
-        if (filterShow !== "all" && filterShow !== showTitle) return null;
+      {/* List of Favorite Episodes */}
+      <div className={styles.favList}>
+        {sorted.map((ep) => (
+          <div key={ep.key} className={styles.card}>
+            <img src={ep.image} alt={ep.title} className={styles.cover} />
 
-        const sorted = sortEpisodes(episodes);
+            <div className={styles.info}>
+              <h2>{ep.title || "Untitled Episode"}</h2>
 
-        return (
-          <section key={showTitle} className="fav-group">
-            <h2>{showTitle} ({sorted.length} episodes)</h2>
+              {(ep.season || ep.episode) && (
+                <p className={styles.meta}>
+                  {ep.season ? `Season ${ep.season}` : ""}{" "}
+                  {ep.episode ? `• Episode ${ep.episode}` : ""}
+                </p>
+              )}
 
-            {sorted.map(ep => (
-              <FavEpisodeCard
-                key={ep.id}
-                ep={ep}
-                onPlay={() => playTrack(ep)}
-                onToggleFav={() => removeFav(ep.id)}
-              />
-            ))}
-          </section>
-        );
-      })}
+              <p className={styles.date}>
+                Added: {ep.addedAt ? new Date(ep.addedAt).toLocaleDateString() : "Unknown"}
+              </p>
+
+              {ep.description && <p className={styles.desc}>{ep.description}</p>}
+            </div>
+
+           <div className={styles.actions}>
+  <button
+    className={styles.playBtn}
+    onClick={() =>
+      playTrack({
+        id: ep.episodeId ?? ep.episode,
+        title: ep.title,
+        audioUrl: ep.audioUrl,
+        cover: ep.image,
+        showTitle: ep.showTitle,
+      })
+    }
+  >
+    <FaPlay /> Play
+  </button>
+
+  <button
+    className={styles.removeBtn}
+    onClick={() => toggleFav(ep.podcastId, ep.episodeId)}
+  >
+    <FaTrash />
+  </button>
+</div>
+
+
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

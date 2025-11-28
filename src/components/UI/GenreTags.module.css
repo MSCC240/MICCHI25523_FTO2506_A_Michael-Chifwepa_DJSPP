@@ -3,11 +3,14 @@
 }
 
 .tag {
-  background: #eee;
+  background: var(--card-bg);   /* instead of #eee */
+  color: var(--text);           /* ensure readable in dark mode */
   padding: 0.3rem 0.6rem;
   margin-right: 0.5rem;
   margin-bottom: 0.5rem;
   border-radius: 4px;
   display: inline-block;
   font-size: 0.8rem;
+  border: 1px solid var(--border); /* adds contrast in dark mode */
+  transition: background 0.3s ease, color 0.3s ease;
 }

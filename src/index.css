@@ -1,29 +1,49 @@
+/* LIGHT THEME */
 :root {
-  --grey-text: #555;
-}
-
-body {
-  font-family: "Inter", sans-serif;
-  margin: 0;
-  background: #f9f9f9;
-}
-
-:root {
-  --card-bg: #fff;
+  --bg: #ffffff;
+  --text: #111111;
+  --card-bg: #f5f5f5;
   --border: #ddd;
-  --text: #111;
+  --player-bg: #ffffffcc;
 }
 
-body[data-theme="dark"] {
-  --card-bg: #21252d;
-  --border: #3a3d45;
-  --text: #e7e7e7;
-  background: #15171c;
+/* DARK THEME */
+:root[data-theme="dark"] {
+  --bg: #121212;
+  --text: #ffffff;
+  --card-bg: #1e1e1e;
+  --border: #333;
+  --player-bg: #1e1e1ecc;
 }
 
+/* GLOBAL */
 body {
+  background: var(--bg);
   color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
   margin: 0;
-  font-family: system-ui, sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
+/* CARDS */
+.card,
+.carouselItem {
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+/* HEADER */
+header {
+  background: var(--bg);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+/* AUDIO PLAYER */
+.playerBar {
+  background: var(--player-bg);
+  backdrop-filter: blur(10px);
+  color: var(--text);
+  border-top: 1px solid var(--border);
+}

@@ -11,16 +11,18 @@ strong {
 .header {
   display: flex;
   gap: 2rem;
-  background: white;
+  background: var(--card-bg);
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   margin-bottom: 2rem;
+  border: 1px solid var(--border);
 }
+
 .backButton {
   background: none;
   border: none;
-  color: #333;
+  color: var(--text);
   font-size: 1rem;
   cursor: pointer;
   margin-bottom: 1rem;
@@ -31,7 +33,7 @@ strong {
 }
 
 .backButton:hover {
-  color: #0070f3;
+  color: #4da3ff;
 }
 
 .cover {
@@ -46,10 +48,12 @@ strong {
   font-weight: bold;
   margin-bottom: 0.5rem;
   margin-top: 0px;
+  color: var(--text);
 }
 
 .description {
-  color: #444;
+  color: var(--text);
+  opacity: 0.85;
   margin-bottom: 1rem;
 }
 
@@ -61,15 +65,18 @@ strong {
 }
 
 .genreBadge {
-  background-color: #e5e7eb;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
   padding: 0.3rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.85rem;
+  color: var(--text);
 }
 
 .metaInfo p {
   font-size: 0.875rem;
-  color: #555;
+  color: var(--text);
+  opacity: 0.75;
   margin: 0.25rem 0;
 }
 
@@ -86,17 +93,16 @@ strong {
 }
 
 .seasonDetails {
-  background: white;
+  background: var(--card-bg);
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border);
 }
 
 .seasonIntro {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  /* align-items: center; */
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -110,10 +116,11 @@ strong {
 .dropdown {
   padding: 0.4rem 0.6rem;
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
   min-width: 140px;
   height: 40px;
-  order: 2;
 }
 
 .seasonCover,
@@ -123,14 +130,12 @@ strong {
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 6px;
-  text-align: center;
-  /* padding: 0.5rem; */
 }
 
 .releaseInfo {
-  color: #777;
+  color: var(--text);
+  opacity: 0.7;
   font-size: 0.875rem;
   margin-top: 0.5rem;
 }
@@ -143,19 +148,20 @@ strong {
 
 .episodeCard {
   display: flex;
-  background: #f9fafb;
+  background: var(--card-bg);
   padding: 1rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 6px;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .episodeCard:hover {
   transform: translateY(-4px);
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border-color: #d1d5db;
+  background: var(--bg);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-color: var(--border);
 }
+
 .episodeInfo {
   margin-left: 10px;
 }
@@ -165,13 +171,69 @@ strong {
   font-size: 0.95rem;
   margin-bottom: 0.25rem;
   margin-top: 0px;
+  color: var(--text);
 }
 
 .episodeDesc {
-  color: #555;
+  color: var(--text);
+  opacity: 0.75;
   font-size: 0.875rem;
 }
 
+/* ACTION BUTTONS (Play + Favourite) ------------------------------------ */
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* PLAY BUTTON */
+.playBtn {
+  background: black;
+  color: white;
+  border: none;
+  margin-top: 100px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+  position: relative;
+  left: 50px;
+}
+
+
+/* FAVOURITE BUTTON */
+.favBtn {
+  background: none;
+  border: none;         /* <-- removes that ugly browser border */
+  cursor: pointer;
+  margin-bottom: 100px;
+  font-size: 20px;
+  color: #999;
+  padding: 6px;
+  transition: color 0.2s;
+}
+
+.favBtn:hover {
+  color: #e63946;
+}
+
+.favBtn svg {
+  display: block;
+}
+
+.favBtn.active svg {
+  color: #e63946 !important;
+}
+
+
+/* MOBILE */
 @media (max-width: 600px) {
   .container {
     padding: 1rem;
@@ -192,18 +254,14 @@ strong {
   .seasonIntro {
     flex-direction: column;
   }
-
   .episodeCover {
     display: none;
   }
-
   .seasonDetails {
     padding: 1rem;
   }
-
   .left {
     order: 1;
-    /* flex-direction: column; */
     width: 100%;
   }
   .dropdown {

@@ -1,42 +1,55 @@
-# 🎧 Podcast App — Portfolio Project
+# 🎧 DJS Portfolio Piece — Podcast App (React)
 
-A polished React podcast discovery app with global audio playback, favourites, filters, pagination, and a show detail page. Built as the final project for the DJS course.
+## Overview
+
+A polished React podcast app built as the final DJS portfolio project.
+Features a searchable, sortable, and filterable listing of podcast previews, dynamic show detail pages with season/episode browsing, a global audio player, and a favourites system persisted to `localStorage`.
 
 ## Live demo
 
-_(Insert your Vercel URL here)_
-
-## Features
-
-- Landing page: searchable, sortable, filterable grid of podcast previews
-- Dynamic show detail pages with seasons and episodes
-- **Global audio player** (persistent across pages) with play/pause, seek and progress
-- **Favourites**: mark episodes, persisted in `localStorage`, dedicated Favourites page
-- Recommended shows carousel on the landing page
-- Theme toggle (Light / Dark) persisted in `localStorage`
-- Responsive layout for desktop/tablet/mobile
-- Deployed to Vercel (SPA routing fallback configured)
+_Add your Vercel / Netlify URL here_
 
 ## Tech stack
 
-- React (Vite)
-- React Router
-- CSS modules (or Tailwind — replace with your styling system)
-- LocalStorage for persistence
-- Optional: `date-fns` for date formatting, `react-slick` or native scroll-snap for carousel
+- React (functional components + hooks)
+- React Router for navigation
+- Context API for global state (audio, favourites, podcasts)
+- Vite for dev + build
+- Plain CSS / CSS modules
 
-## Quick start
+# Key features
 
-```bash
-# install
-npm install
+## 🔊 Global Audio Player
 
-# dev
-npm run dev
+- Plays audio using a placeholder API
+- Keeps the player fixed at the bottom of the screen across all pages
+- Ensures uninterrupted playback when navigating between pages
+- Provides play, pause, seek, and progress tracking
 
-# build
-npm run build
+## ❤️ Favourites
 
-# preview production locally
-npm run preview
-```
+- Allows users to favourite or unfavourite episodes via a button/icon
+- Uses localStorage to persist favourites across sessions
+- Provide visual feedback for favourited items
+- Creates a favourites page displaying all saved episodes
+- Displays associated show and season for each favourite
+- Groups favourites by show title
+- Add sorting options:
+
+* A–Z / Z–A by title
+* Newest / Oldest by date added
+
+## 🎠 Recommended Shows Carousel
+
+- Adds a horizontally scrollable carousel to the landing page
+- Shows each show’s image, title, and genre tags
+- Supports looping and navigation via swipe or arrows
+- Clicking a carousel item navigates to the show’s detail page
+
+## 🌗 Theme Toggle
+
+- Includes a toggle for switching between light and dark mode
+- Persistant theme selection using localStorage
+- Ensures the entire app UI updates smoothly
+- Uses appropriate icons to indicate current theme
+- Reflects selected theme across all views and components

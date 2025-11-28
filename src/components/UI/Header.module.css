@@ -1,12 +1,34 @@
 .appHeader {
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
-  background: white;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  padding: 1rem 1.5rem;
+  background: var(--bg);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .appHeader a {
   text-decoration: none;
-  color: black;
+  color: var(--text);
+  transition: color 0.3s ease;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.navLinks a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.2rem;
 }
