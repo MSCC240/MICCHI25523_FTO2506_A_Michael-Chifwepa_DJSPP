@@ -7,7 +7,7 @@ Features a searchable, sortable, and filterable listing of podcast previews, dyn
 
 ## Live demo
 
-_Add your Vercel / Netlify URL here_
+[_Live App on Vercel_](https://my-demopodcast-app.vercel.app/)
 
 ## Tech stack
 
