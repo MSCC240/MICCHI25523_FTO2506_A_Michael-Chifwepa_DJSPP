@@ -11,9 +11,9 @@ export function AudioProvider({ children }) {
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
 
-  // -----------------------------------------------------
+  
   // PLAY A TRACK
-  // -----------------------------------------------------
+  
   const playTrack = (track) => {
     setCurrentTrack(track);
 
@@ -26,9 +26,9 @@ export function AudioProvider({ children }) {
     }
   };
 
-  // -----------------------------------------------------
+
   // TOGGLE PLAY / PAUSE
-  // -----------------------------------------------------
+
   const togglePlay = () => {
     if (!audioRef.current) return;
 
@@ -41,18 +41,16 @@ export function AudioProvider({ children }) {
     }
   };
 
-  // -----------------------------------------------------
   // SEEK IN AUDIO
-  // -----------------------------------------------------
   const seek = (value) => {
     if (!audioRef.current) return;
     audioRef.current.currentTime = value;
     setProgress(value);
   };
 
-  // -----------------------------------------------------
+ 
   // UPDATE PROGRESS + DURATION
-  // -----------------------------------------------------
+
   useEffect(() => {
     if (!audioRef.current) return;
 
@@ -72,17 +70,15 @@ export function AudioProvider({ children }) {
     };
   }, []);
 
-  // -----------------------------------------------------
   // VOLUME CONTROL
-  // -----------------------------------------------------
+ 
   useEffect(() => {
     if (!audioRef.current) return;
     audioRef.current.volume = volume;
   }, [volume]);
 
-  // -----------------------------------------------------
-  // OPTIONAL: NEXT / PREV (empty for now but required by your UI)
-  // -----------------------------------------------------
+
+  
   const nextTrack = () => {
     console.warn("nextTrack not implemented yet.");
   };
