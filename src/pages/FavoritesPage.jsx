@@ -35,8 +35,8 @@ export default function FavoritesPage() {
     return Number.isNaN(t) ? 0 : t;
   };
 
-  // Map canonical sortKey values (support both naming styles)
-  // canonical keys we handle:
+
+  // canonical keys I need to handle:
   // - newest / date-desc  -> newest first
   // - oldest / date-asc   -> oldest first
   // - az / title-asc      -> title A → Z
@@ -48,7 +48,7 @@ export default function FavoritesPage() {
     if (k === "date-asc" || k === "oldest") return "oldest";
     if (k === "title-asc" || k === "az") return "az";
     if (k === "title-desc" || k === "za") return "za";
-    // fallback — try to guess common patterns
+    
     if (k.includes("date") && k.includes("desc")) return "newest";
     if (k.includes("date") && k.includes("asc")) return "oldest";
     if (k.includes("title") && k.includes("asc")) return "az";
