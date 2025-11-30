@@ -54,7 +54,7 @@ export default function RecommendedCarousel({ shows }) {
 
             <p className={styles.titleText}>{show.title}</p>
 
-            {/* ⭐ Correct genre lookup */}
+            {/*  Correct genre lookup */}
             <div className={styles.genreRow}>
               {show.genres?.map((id) => {
                 const genre = genreMap.find((g) => g.id === id);
