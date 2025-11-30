@@ -6,7 +6,7 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
-    // Apply theme to <html>, not <body>
+    // Apply theme to <html>
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
