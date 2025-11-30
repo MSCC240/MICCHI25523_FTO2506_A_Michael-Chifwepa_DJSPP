@@ -1,4 +1,4 @@
-// GenreFilter.jsx
+
 import { useContext } from "react";
 import { PodcastContext } from "../../context/PodcastContext";
 import styles from "./GenreFilter.module.css";
