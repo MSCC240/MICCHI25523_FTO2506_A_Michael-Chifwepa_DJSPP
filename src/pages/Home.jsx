@@ -23,27 +23,27 @@ export default function Home() {
   return (
     <main className={styles.main}>
 
-      {/* ✅ Recommended Shows Section */}
+      {/*  Recommended Shows Section */}
       {podcasts.length > 0 && (
         <section className={styles.recommended}>
           <RecommendedCarousel shows={podcasts.slice(0, 10)} />
         </section>
       )}
 
-      {/* 🔍 Filters + Sorting */}
+      {/*  Filters + Sorting */}
       <section className={styles.controls}>
         <SearchBar />
         <GenreFilter genres={genres} />
         <SortSelect />
       </section>
 
-      {/* ⏳ Loading + Error */}
+      {/*  Loading + Error */}
       {loading && <Loading message="Loading podcasts..." />}
       {error && (
         <Error message={`Error occurred while fetching podcasts: ${error}`} />
       )}
 
-      {/* 🎧 Podcast Grid + Pagination */}
+      {/*  Podcast Grid + Pagination */}
       {!loading && !error && (
         <>
           <PodcastGrid />
